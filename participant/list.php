@@ -44,7 +44,7 @@ if($num>0) {
     echo json_encode($participantArr);
 }
  
-else{
+else {
     echo json_encode(
         array("message" => "No participant found.")
     );
