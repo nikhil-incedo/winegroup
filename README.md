@@ -1,5 +1,3 @@
-# winegroup
-
 ## Participant
   - Create
   - Listing
