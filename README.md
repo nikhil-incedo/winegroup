@@ -2,7 +2,10 @@
   - Create
   - Listing
 
-## Events
+## Event
   - Create
   - Update
   - Listing
+
+## Admin
+  - Login
