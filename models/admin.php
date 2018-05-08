@@ -24,7 +24,8 @@ class Admin
         // execute query
         if($stmt->execute()) {
             if($stmt->rowCount()>0) {
-                if($this->setToken($this->conn->lastInsertId())) {
+                $row = $stmt->fetch();
+                if($this->setToken($row[0])) {
                     $ret['result'] = 'success';
                     $ret['token'] = $this->token;
                     return json_encode($ret);
@@ -45,7 +46,7 @@ class Admin
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":token", $token);
         $stmt->bindParam(":id", $id);
-
+        echo $id;
         if($stmt->execute()) {
             $this->token = $token;
             return true;
