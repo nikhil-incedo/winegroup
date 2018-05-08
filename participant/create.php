@@ -20,6 +20,7 @@ $participant = new Participant($db);
 $data = json_decode(file_get_contents("php://input"));
 if(empty($data->firstname) OR empty($data->lastname)) {
     echo '{';
+        echo '"result": "failure"';
         echo '"message": "Invalid Data"';
     echo '}';
     exit();
@@ -29,16 +30,5 @@ if(empty($data->firstname) OR empty($data->lastname)) {
 $participant->firstname = $data->firstname;
 $participant->lastname = $data->lastname;
  
-if($participant->store()) {
-    echo '{';
-        echo '"message": "Participant created successfully."';
-    echo '}';
-    exit();
-}
-// if unable to create, tell the user
-else {
-    echo '{';
-        echo '"message": "Unable to create participant."';
-    echo '}';
-    exit();
-}
+echo $participant->store();
+exit();

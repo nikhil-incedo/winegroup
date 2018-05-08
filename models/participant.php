@@ -41,8 +41,8 @@ class Participant
         $stmt = $this->conn->prepare($query);
      
         // sanitize
-        $this->firstname=htmlspecialchars(strip_tags($this->firstname));
-        $this->lastname=htmlspecialchars(strip_tags($this->lastname));
+        $this->firstname = htmlspecialchars(strip_tags($this->firstname));
+        $this->lastname  = htmlspecialchars(strip_tags($this->lastname));
      
         // bind values
         $stmt->bindParam(":firstname", $this->firstname);
@@ -50,10 +50,14 @@ class Participant
 
         // execute query
         if($stmt->execute()) {
-            return true;
+            $ret['result']  = 'success';
+            $ret['id']      = $this->conn->lastInsertId();
+        }else {
+            $ret['result']  = 'failure';
+            $ret['message'] = 'Unable to save';
         }
-     
-        return false;
+    
+        return json_encode($ret);
     }
 
     function update() {
