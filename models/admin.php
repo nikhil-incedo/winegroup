@@ -46,7 +46,6 @@ class Admin
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":token", $token);
         $stmt->bindParam(":id", $id);
-        echo $id;
         if($stmt->execute()) {
             $this->token = $token;
             return true;

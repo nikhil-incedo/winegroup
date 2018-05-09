@@ -17,7 +17,7 @@ if($num>0) {
     $eventArr = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
- 
+    
         $datum = array(
             "id" => $id,
             "date" => $date,
@@ -28,9 +28,7 @@ if($num>0) {
     }
  
     echo json_encode($eventArr);
-}
- 
-else {
+} else {
     echo json_encode(
         array("message" => "No event found.")
     );

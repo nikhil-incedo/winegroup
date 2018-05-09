@@ -16,6 +16,7 @@ $event = new Event($db);
 $data = json_decode(file_get_contents("php://input"));
 if(empty($data->date)) {
     echo '{';
+        echo '"result": "failure",';
         echo '"message": "Invalid Data"';
     echo '}';
     exit();
@@ -25,12 +26,14 @@ $event->date = $data->date;
  
 if($event->store()) {
     echo '{';
+        echo '"result": "success",';
         echo '"message": "Event created successfully."';
     echo '}';
     exit();
 } else {
     echo '{';
-        echo '"message": "Unable to create event."';
+        echo '"result": "failure",';
+        echo '"message": "Unable to save."';
     echo '}';
     exit();
 }

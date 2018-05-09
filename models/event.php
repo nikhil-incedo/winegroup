@@ -16,7 +16,7 @@ class Event
 
     function list() {
         // select query
-        $query = "SELECT date, status, FROM events ORDER BY created_at DESC";
+        $query = "SELECT id, date, status FROM events ORDER BY created_at DESC";
      
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -56,13 +56,14 @@ class Event
         if(empty($this->date) AND empty($this->status)) {
             return true;
         }else {
-            $query = "UPDATE events SET "
+            $allowedStatus = array('A','C','I');
             if(!empty($this->date)) {
                 $updateArr[] = "date=:date";
             }
-            if(!empty($this->status)) {
+            if(!empty($this->status) AND in_array($this->status, $allowedStatus)) {
                 $updateArr[] = "status=:status";
             }
+            $query = "UPDATE events SET ";
             $query .= implode(',', $updateArr);
             $query .= " WHERE id=:id";
 
@@ -76,14 +77,16 @@ class Event
             }
             if(!empty($this->status)) {
                 $this->status=htmlspecialchars(strip_tags($this->status));
-                $stmt->bindParam(":status", $this->status);                
+                if(in_array($this->status, $allowedStatus)) {
+                    $stmt->bindParam(":status", $this->status);                
+                }
             }
         
            if($stmt->execute()) {
                 return true;
             }
 
-            return false
+            return false;
         }
     }
 

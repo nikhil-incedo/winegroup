@@ -16,6 +16,7 @@ $event = new Event($db);
 $data = json_decode(file_get_contents("php://input"));
 if(empty($data->id)) {
     echo '{';
+        echo '"result": "failure",';
         echo '"message": "Invalid Data"';
     echo '}';
     exit();
@@ -26,16 +27,18 @@ if(!empty($data->date)) {
     $event->date = $data->date;
 }
 if(!empty($data->status)) {
-    $event->status = $data->status;
+    $event->status = ucfirst($data->status);
 }
 
 if($event->update()) {
     echo '{';
+        echo '"result": "success",';
         echo '"message": "Event updated successfully."';
     echo '}';
     exit();
 } else {
     echo '{';
+        echo '"result": "failure",';
         echo '"message": "Unable to update Event."';
     echo '}';
     exit();
